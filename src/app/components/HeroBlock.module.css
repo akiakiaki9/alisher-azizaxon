@@ -1,0 +1,362 @@
+/* ===== Hero Block Styles ===== */
+
+.heroSection {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.heroBg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        filter 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.heroBgBlurred {
+    filter: blur(12px) brightness(0.5);
+    transform: scale(1.1);
+}
+
+.heroBgUnlocked {
+    filter: brightness(0.45);
+    transform: scale(1.08);
+}
+
+.heroOverlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.heroContent {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+    max-width: 800px;
+    width: 100%;
+}
+
+.heroBadge {
+    display: inline-block;
+    padding: 6px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 24px;
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.heroTitle {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 12vw, 6rem);
+    font-weight: 700;
+    line-height: 1.05;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 30%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.heroDate {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 16px;
+}
+
+.heroAyat {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    margin: 16px 0 8px;
+    opacity: 0.9;
+}
+
+.heroAyatMeaning {
+    font-size: 13px;
+    opacity: 0.6;
+    letter-spacing: 0.05em;
+}
+
+/* ===== UNLOCK COMPONENT ===== */
+.unlockWrapper {
+    margin-top: 40px;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Контейнер кнопки */
+.unlockContainer {
+    position: relative;
+    width: 100%;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px);
+    border-radius: 32px;
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    touch-action: none;
+}
+
+.unlockContainer:active {
+    cursor: grabbing;
+}
+
+.unlockContainer:hover {
+    border-color: rgba(201, 169, 110, 0.25);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.unlockContainerHolding {
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 40px rgba(201, 169, 110, 0.15), 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+    transform: scale(1.02);
+}
+
+/* Прогресс-бар */
+.unlockProgress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+    transition: width 0.08s linear;
+    will-change: width;
+    border-radius: 32px;
+    box-shadow: 0 0 60px rgba(201, 169, 110, 0.2);
+}
+
+.unlockProgress::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 60px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15));
+    border-radius: 32px;
+}
+
+/* Текст на кнопке */
+.unlockLabel {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    z-index: 1;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+}
+
+.unlockLabel .unlockIcon {
+    font-size: 20px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.unlockContainerHolding .unlockLabel .unlockIcon {
+    transform: scale(1.1);
+}
+
+/* Процент выполнения */
+.unlockPercent {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold-light);
+    min-width: 36px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2px 8px;
+    border-radius: 12px;
+    animation: pulsePercent 1s ease-in-out infinite;
+}
+
+@keyframes pulsePercent {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Состояние "разблокировано" */
+.unlockLabelDone {
+    color: var(--dark);
+    font-weight: 600;
+    text-shadow: none;
+}
+
+.unlockLabelDone .unlockIcon {
+    color: var(--dark);
+}
+
+/* Подсказка под кнопкой */
+.unlockHint {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.2);
+    letter-spacing: 0.1em;
+    height: 24px;
+    transition: all 0.3s ease;
+}
+
+.unlockHint span {
+    transition: all 0.3s ease;
+}
+
+/* Ripple эффект при удержании */
+.unlockRipple {
+    position: relative;
+    height: 3px;
+    width: 80px;
+    margin: 0 auto;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    border-radius: 2px;
+    animation: shimmerProgress 1.2s ease-in-out infinite;
+}
+
+@keyframes shimmerProgress {
+    0% {
+        opacity: 0.2;
+        transform: scaleX(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+
+    100% {
+        opacity: 0.2;
+        transform: scaleX(0.8);
+    }
+}
+
+/* ===== АДАПТИВ ===== */
+@media (max-width: 640px) {
+    .unlockWrapper {
+        max-width: 320px;
+        margin-top: 28px;
+    }
+
+    .unlockContainer {
+        height: 54px;
+        border-radius: 27px;
+    }
+
+    .unlockLabel {
+        font-size: 11px;
+        gap: 8px;
+    }
+
+    .unlockLabel .unlockIcon {
+        font-size: 17px;
+    }
+
+    .unlockPercent {
+        font-size: 10px;
+        min-width: 30px;
+        padding: 1px 6px;
+    }
+
+    .unlockHint {
+        font-size: 10px;
+        margin-top: 10px;
+    }
+
+    .heroBadge {
+        font-size: 9px;
+        padding: 4px 16px;
+        margin-bottom: 16px;
+    }
+
+    .heroTitle {
+        font-size: clamp(2rem, 10vw, 2.8rem);
+    }
+
+    .heroDate {
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+    }
+
+    .heroAyat {
+        font-size: clamp(1.2rem, 4vw, 1.8rem);
+    }
+
+    .heroAyatMeaning {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 380px) {
+    .unlockWrapper {
+        max-width: 260px;
+    }
+
+    .unlockContainer {
+        height: 46px;
+        border-radius: 23px;
+    }
+
+    .unlockLabel {
+        font-size: 10px;
+        gap: 6px;
+    }
+
+    .unlockLabel .unlockIcon {
+        font-size: 14px;
+    }
+
+    .unlockPercent {
+        font-size: 9px;
+        min-width: 26px;
+        padding: 1px 4px;
+    }
+
+    .heroTitle {
+        font-size: clamp(1.6rem, 8vw, 2.2rem);
+    }
+}
+
+/* Анимация появления при разблокировке */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.animateFadeIn {
+    animation: fadeIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
