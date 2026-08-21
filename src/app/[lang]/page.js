@@ -28,11 +28,8 @@ export default function Home({ params }) {
     const handleUnlock = () => {
         setIsUnlocked(true);
 
-        // Запускаем музыку через реф
         if (musicPlayerRef.current) {
-            setTimeout(() => {
-                musicPlayerRef.current.startMusic();
-            }, 300);
+            musicPlayerRef.current.startMusic();
         }
 
         setTimeout(() => {

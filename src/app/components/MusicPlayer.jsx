@@ -18,11 +18,10 @@ const MusicPlayer = forwardRef(({ lang = 'ru' }, ref) => {
 
     useImperativeHandle(ref, () => ({
         startMusic: () => {
-            if (audioRef.current && isLoaded) {
-                audioRef.current.play().catch(() => {
-                    console.log('Автоплей заблокирован');
-                });
-                setIsPlaying(true);
+            if (audioRef.current) {
+                audioRef.current.play()
+                    .then(() => setIsPlaying(true))
+                    .catch(() => setIsPlaying(false));
             }
         },
         togglePlay: togglePlay
@@ -33,9 +32,10 @@ const MusicPlayer = forwardRef(({ lang = 'ru' }, ref) => {
         audioRef.current.loop = true;
         audioRef.current.volume = 0.4;
 
-        audioRef.current.addEventListener('canplaythrough', () => {
-            setIsLoaded(true);
-        });
+        audioRef.current.preload = 'auto';
+        audioRef.current.addEventListener('loadeddata', () => setIsLoaded(true));
+        audioRef.current.addEventListener('canplay', () => setIsLoaded(true));
+        audioRef.current.load();
 
         return () => {
             if (audioRef.current) {
@@ -46,16 +46,15 @@ const MusicPlayer = forwardRef(({ lang = 'ru' }, ref) => {
     }, []);
 
     const togglePlay = () => {
-        if (!audioRef.current || !isLoaded) return;
+        if (!audioRef.current) return;
 
         if (isPlaying) {
             audioRef.current.pause();
             setIsPlaying(false);
         } else {
-            audioRef.current.play().catch(() => {
-                console.log('Playback blocked');
-            });
-            setIsPlaying(true);
+            audioRef.current.play()
+                .then(() => setIsPlaying(true))
+                .catch(() => setIsPlaying(false));
         }
     };
 
