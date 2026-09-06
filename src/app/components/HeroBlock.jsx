@@ -17,7 +17,7 @@ export default function HeroBlock({ lang, onUnlock, onMusicStart }) {
         ru: {
             badge: 'СВАДЕБНОЕ ПРИГЛАШЕНИЕ',
             names: 'Алишер & Азизахон',
-            date: '28 • 08 • 2026',
+            date: '10 • 10 • 2026',  // ИЗМЕНЕНО
             unlock: 'ПОТЯНИТЕ ДЛЯ ОТКРЫТИЯ',
             done: 'ОТКРЫТО ✓',
             ayatMeaning: '«И Он соединил их сердца» — Аль-Анфаль, 63',
@@ -26,7 +26,7 @@ export default function HeroBlock({ lang, onUnlock, onMusicStart }) {
         en: {
             badge: 'WEDDING INVITATION',
             names: 'Alisher & Azizaxon',
-            date: '28 • 08 • 2026',
+            date: '10 • 10 • 2026',  // ИЗМЕНЕНО
             unlock: 'SLIDE TO OPEN',
             done: 'OPENED ✓',
             ayatMeaning: '“And He brought their hearts together” — Al-Anfal, 63',
@@ -35,7 +35,7 @@ export default function HeroBlock({ lang, onUnlock, onMusicStart }) {
         uz: {
             badge: "TO'Y TAKLIFNOMASI",
             names: 'Alisher & Azizaxon',
-            date: '28 • 08 • 2026',
+            date: '10 • 10 • 2026',  // ИЗМЕНЕНО
             unlock: "OCHISH UCHUN TORTING",
             done: 'OCHILDI ✓',
             ayatMeaning: '«U ularning qalblarini birlashtirdi» — Anfol, 63',
@@ -44,7 +44,7 @@ export default function HeroBlock({ lang, onUnlock, onMusicStart }) {
         oz: {
             badge: "ТЎЙ ТАКЛИФНОМАСИ",
             names: 'Алишер & Азизахон',
-            date: '28 • 08 • 2026',
+            date: '10 • 10 • 2026',  // ИЗМЕНЕНО
             unlock: "ОЧИШ УЧУН ТОРТИНГ",
             done: 'ОЧИЛДИ ✓',
             ayatMeaning: '«У уларнинг қалбларини бирлаштирди» — Анфол, 63',

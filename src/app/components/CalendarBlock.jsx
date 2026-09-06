@@ -9,13 +9,14 @@ export default function CalendarBlock({ lang }) {
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [calendarDays, setCalendarDays] = useState([]);
 
-  const eventDate = new Date(2026, 7, 28, 19, 0);
+  // ДАТА ИЗМЕНЕНА НА 10 ОКТЯБРЯ 2026 ГОДА
+  const eventDate = new Date(2026, 9, 10, 19, 0); // Месяц 9 = Октябрь
 
   const monthNames = {
-    ru: 'Август',
-    en: 'August',
-    uz: 'Avgust',
-    oz: 'Август',
+    ru: 'Октябрь',
+    en: 'October',
+    uz: 'Oktyabr',
+    oz: 'Октябрь',
   };
 
   const weekDays = {
@@ -40,10 +41,10 @@ export default function CalendarBlock({ lang }) {
   };
 
   const noteText = {
-    ru: '28 августа 2026 года в 19:00 мы ждём вас разделить с нами этот особенный день!',
-    en: 'On August 28, 2026 at 7:00 PM we are waiting for you to share this special day with us!',
-    uz: "2026-yil 28-avgust soat 19:00 da biz sizni ushbu o'ziga xos kunni biz bilan baham ko'rishga kutamiz!",
-    oz: "2026-йил 28-август соат 19:00 да биз сизни ушбу ўзига хос кунни биз билан баҳам кўришга кутамиз!",
+    ru: '10 октября 2026 года в 19:00 мы ждём вас разделить с нами этот особенный день!',
+    en: 'On October 10, 2026 at 7:00 PM we are waiting for you to share this special day with us!',
+    uz: "2026-yil 10-oktyabr soat 19:00 da biz sizni ushbu o'ziga xos kunni biz bilan baham ko'rishga kutamiz!",
+    oz: "2026-йил 10-октябрь соат 19:00 да биз сизни ушбу ўзига хос кунни биз билан баҳам кўришга кутамиз!",
   };
 
   const weddingDayLabels = {
@@ -54,10 +55,10 @@ export default function CalendarBlock({ lang }) {
   };
 
   const arabicDates = {
-    ru: '٢٨ августа ٢٠٢٦',
-    en: '٢٨ August ٢٠٢٦',
-    uz: '٢٨ avgust ٢٠٢٦',
-    oz: '٢٨ август ٢٠٢٦',
+    ru: '١٠ октября ٢٠٢٦',
+    en: '١٠ October ٢٠٢٦',
+    uz: '١٠ oktyabr ٢٠٢٦',
+    oz: '١٠ октябрь ٢٠٢٦',
   };
 
   const monthName = monthNames[lang] || monthNames.ru;
