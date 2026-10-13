@@ -1,31 +1,33 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
 
-export default function PageTransition({ children, className = '' }) {
-    const [isVisible, setIsVisible] = useState(false);
-    const [hasAnimated, setHasAnimated] = useState(false);
-    const { ref, inView } = useInView({
-        threshold: 0.3,
-        triggerOnce: true,
-    });
+export default function PageTransition({ children, className = '', delay = 0 }) {
+    const ref = useRef(null);
+    const [visible, setVisible] = useState(false);
 
     useEffect(() => {
-        if (inView && !hasAnimated) {
-            setIsVisible(true);
-            setHasAnimated(true);
-        }
-    }, [inView, hasAnimated]);
+        const el = ref.current;
+        if (!el) return;
+        const obs = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => setVisible(true), delay);
+                    obs.disconnect();
+                }
+            },
+            { threshold: 0.2 }
+        );
+        obs.observe(el);
+        return () => obs.disconnect();
+    }, [delay]);
 
     return (
         <div
             ref={ref}
-            className={`page-transition ${isVisible ? 'page-visible' : ''} ${className}`}
+            className={`page-transition ${visible ? 'page-visible' : ''} ${className}`}
         >
-            <div className="page-content">
-                {children}
-            </div>
+            <div className="page-content">{children}</div>
         </div>
     );
 }

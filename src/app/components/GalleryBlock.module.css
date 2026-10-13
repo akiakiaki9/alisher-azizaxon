@@ -1,0 +1,558 @@
+/* =========================================================
+   GALLERY — DECK
+   ========================================================= */
+
+.galleryInner {
+  max-width: 1200px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  padding: 0 4px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.label {
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.dividerWrap {
+  display: flex;
+  justify-content: center;
+  color: var(--accent);
+  max-width: 180px;
+  margin: 22px auto 20px;
+  opacity: 0.7;
+}
+
+.dividerWrap svg {
+  width: 100%;
+  height: auto;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--ink-soft);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+/* =========================================================
+   DECK
+   ========================================================= */
+.deckWrap {
+  position: relative;
+  width: 100%;
+  padding: 40px 0 20px;
+}
+
+.deck {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 40px 20px;
+  position: relative;
+  /* УБИРАЕМ горизонтальный скролл и snap — колода всегда видна целиком */
+  overflow: visible;
+}
+
+/* =========================================================
+   CARD
+   ========================================================= */
+.card {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(140px, 15vw, 210px);
+  aspect-ratio: 3 / 4;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: grab;
+  margin-left: -70px;
+  transition:
+    transform .55s cubic-bezier(.22, 1, .36, 1),
+    margin .55s cubic-bezier(.22, 1, .36, 1),
+    opacity .35s ease;
+  transform: rotate(var(--rot, 0deg));
+  transform-origin: center center;
+  will-change: transform;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.card:first-child {
+  margin-left: 0;
+}
+
+.card:active {
+  cursor: grabbing;
+}
+
+.card * {
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* Hover на десктопе */
+@media (hover: hover) and (pointer: fine) {
+  .card:hover,
+  .card:focus-visible {
+    transform: rotate(0deg) translateY(-24px) scale(1.06);
+    z-index: 20;
+    margin-left: -40px;
+    margin-right: 20px;
+  }
+
+  .card:hover + .card,
+  .card:focus-visible + .card {
+    margin-left: -40px;
+  }
+}
+
+/* Внутренний блок */
+.cardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow:
+    0 12px 32px rgba(43, 38, 33, 0.15),
+    0 2px 8px rgba(43, 38, 33, 0.08),
+    0 0 0 1px rgba(139, 115, 85, 0.08);
+  transition: box-shadow .5s ease;
+}
+
+.cardInner::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  pointer-events: none;
+  z-index: 2;
+  transition: inset .4s ease, border-color .4s ease;
+}
+
+.card:hover .cardInner {
+  box-shadow:
+    0 30px 60px rgba(43, 38, 33, 0.25),
+    0 6px 16px rgba(43, 38, 33, 0.12),
+    0 0 0 1px rgba(139, 115, 85, 0.15);
+}
+
+.card:hover .cardInner::after {
+  inset: 12px;
+  border-color: rgba(255, 255, 255, 0.85);
+}
+
+.img {
+  object-fit: cover;
+  transition: transform 1s cubic-bezier(.22, 1, .36, 1), filter .6s ease;
+  filter: saturate(0.92) contrast(1.02);
+}
+
+.card:hover .img {
+  transform: scale(1.05);
+  filter: saturate(1.05) contrast(1.04);
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(43, 38, 33, 0) 40%,
+    rgba(43, 38, 33, 0.35) 100%
+  );
+  opacity: 0.7;
+  transition: opacity .4s ease;
+  z-index: 1;
+}
+
+.card:hover .cardOverlay {
+  opacity: 0.35;
+}
+
+.cardNumber {
+  position: absolute;
+  bottom: 14px;
+  right: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  letter-spacing: 0.15em;
+  z-index: 3;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Подсказка */
+.hint {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  opacity: 0.7;
+}
+
+/* Кнопка «Открыть всю карусель» */
+.openAllWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.openAllBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 26px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .3s ease, color .3s ease, transform .3s ease;
+}
+
+.openAllBtn:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.openAllBtn svg {
+  font-size: 15px;
+}
+
+/* =========================================================
+   FLY (анимация улёта)
+   ========================================================= */
+.flying {
+  transition:
+    transform .42s cubic-bezier(.22, 1, .36, 1),
+    opacity .42s ease,
+    margin .42s ease;
+  z-index: 25;
+  pointer-events: none;
+}
+
+.flying .cardInner {
+  box-shadow: 0 40px 80px rgba(43, 38, 33, 0.3);
+}
+
+.fly_right {
+  transform: translate3d(140vw, -30px, 0) rotate(35deg) scale(0.9) !important;
+  opacity: 0;
+  margin-left: -70px !important;
+}
+
+.fly_left {
+  transform: translate3d(-140vw, -30px, 0) rotate(-35deg) scale(0.9) !important;
+  opacity: 0;
+  margin-left: -70px !important;
+}
+
+/* =========================================================
+   АДАПТИВ
+   ========================================================= */
+@media (max-width: 1024px) {
+  .card {
+    width: clamp(130px, 16vw, 180px);
+    margin-left: -80px;
+  }
+
+  .fly_right,
+  .fly_left {
+    margin-left: -80px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: clamp(110px, 18vw, 150px);
+    margin-left: -85px;
+  }
+
+  .cardNumber {
+    font-size: 12px;
+    bottom: 10px;
+    right: 12px;
+  }
+
+  .fly_right,
+  .fly_left {
+    margin-left: -85px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .galleryInner {
+    padding: 0;
+  }
+
+  .header {
+    margin-bottom: 32px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .deckWrap {
+    padding: 20px 0 10px;
+  }
+
+  .deck {
+    padding: 30px 12px;
+  }
+
+  .card {
+    width: clamp(90px, 26vw, 130px);
+    margin-left: -70px;
+  }
+
+  .cardNumber {
+    font-size: 10px;
+    bottom: 8px;
+    right: 10px;
+  }
+
+  .hint {
+    margin-top: 16px;
+    font-size: 10px;
+  }
+
+  .openAllBtn {
+    padding: 10px 20px;
+    font-size: 10px;
+  }
+
+  .fly_right {
+    transform: translate3d(120vw, -20px, 0) rotate(30deg) scale(0.9) !important;
+    margin-left: -70px !important;
+  }
+
+  .fly_left {
+    transform: translate3d(-120vw, -20px, 0) rotate(-30deg) scale(0.9) !important;
+    margin-left: -70px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .card {
+    width: 85px;
+    margin-left: -65px;
+  }
+
+  .fly_right,
+  .fly_left {
+    margin-left: -65px !important;
+  }
+}
+
+/* =========================================================
+   LIGHTBOX (модалка через портал — поверх всего)
+   ========================================================= */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(20, 16, 12, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: lbFade 0.35s ease;
+  padding: 40px 20px;
+}
+
+@keyframes lbFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.lightboxStage {
+  position: relative;
+  width: min(90vw, 1100px);
+  height: min(85vh, 720px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: lbZoom 0.5s cubic-bezier(.22, 1, .36, 1);
+}
+
+@keyframes lbZoom {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.lightboxImageWrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.lightboxImageWrap::after {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.lightboxImg {
+  object-fit: contain;
+}
+
+.counter {
+  position: absolute;
+  bottom: -36px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  letter-spacing: 0.3em;
+}
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #fff;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.navBtn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.navPrev {
+  left: 24px;
+}
+
+.navNext {
+  right: 24px;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #fff;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.closeBtn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: rotate(90deg);
+}
+
+@media (max-width: 640px) {
+  .navBtn {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+  }
+
+  .navPrev {
+    left: 10px;
+  }
+
+  .navNext {
+    right: 10px;
+  }
+
+  .closeBtn {
+    top: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+  }
+
+  .lightboxStage {
+    height: min(70vh, 620px);
+    width: 94vw;
+  }
+
+  .counter {
+    bottom: -30px;
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .cardInner,
+  .img,
+  .cardOverlay,
+  .flying {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

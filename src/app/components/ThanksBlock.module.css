@@ -1,0 +1,255 @@
+.inner {
+    max-width: 1100px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    padding: 0 4px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: clamp(44px, 6vw, 72px);
+}
+
+.label {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+}
+
+.title {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--ink);
+    font-weight: 400;
+}
+
+.dividerWrap {
+    display: flex;
+    justify-content: center;
+    color: var(--accent);
+    max-width: 180px;
+    margin: 22px auto 20px;
+    opacity: 0.7;
+}
+
+.dividerWrap svg {
+    width: 100%;
+    height: auto;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: var(--ink-soft);
+    font-style: italic;
+    letter-spacing: 0.02em;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ===== GRID ===== */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(16px, 2vw, 24px);
+}
+
+/* ===== CARD ===== */
+.card {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line-soft);
+    border-radius: 20px;
+    padding: clamp(26px, 2.6vw, 36px) clamp(20px, 2vw, 28px);
+    text-align: center;
+    transition:
+        transform .5s cubic-bezier(.22, 1, .36, 1),
+        box-shadow .5s ease,
+        border-color .5s ease;
+    opacity: 0;
+    animation: thanksIn .8s cubic-bezier(.22, 1, .36, 1) forwards;
+    animation-delay: calc(var(--i) * 0.1s + 0.15s);
+}
+
+@keyframes thanksIn {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid var(--line-soft);
+    border-radius: 14px;
+    pointer-events: none;
+    opacity: 0.55;
+    transition: inset .4s ease, border-color .4s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent-light);
+    box-shadow: 0 24px 60px rgba(139, 115, 85, 0.12);
+}
+
+.card:hover::after {
+    inset: 12px;
+    border-color: rgba(139, 115, 85, 0.25);
+}
+
+/* Иконка */
+.iconWrap {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: rgba(139, 115, 85, 0.08);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .4s ease, color .4s ease, transform .5s ease;
+}
+
+.icon {
+    font-size: 22px;
+}
+
+.card:hover .iconWrap {
+    background: var(--accent);
+    color: #fff;
+    transform: scale(1.08);
+}
+
+/* Заголовок карточки */
+.cardTo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 12px;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+}
+
+/* Текст */
+.cardText {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+/* ===== OUTRO ===== */
+.outro {
+    margin-top: clamp(44px, 6vw, 72px);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    justify-content: center;
+}
+
+.outroLine {
+    flex: 1;
+    max-width: 140px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-light), transparent);
+    opacity: 0.7;
+}
+
+.outroText {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-style: italic;
+    color: var(--accent);
+    text-align: center;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .inner {
+        padding: 0;
+    }
+
+    .header {
+        margin-bottom: 40px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .card {
+        padding: 24px 20px;
+    }
+
+    .iconWrap {
+        width: 46px;
+        height: 46px;
+        margin-bottom: 14px;
+    }
+
+    .icon {
+        font-size: 20px;
+    }
+
+    .cardTo {
+        font-size: 1.15rem;
+    }
+
+    .cardText {
+        font-size: 13px;
+    }
+
+    .outro {
+        gap: 14px;
+        margin-top: 40px;
+    }
+
+    .outroLine {
+        max-width: 60px;
+    }
+
+    .outroText {
+        font-size: 1rem;
+        white-space: normal;
+    }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+    .card {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .card:hover,
+    .iconWrap,
+    .card::after {
+        transition: none;
+    }
+}

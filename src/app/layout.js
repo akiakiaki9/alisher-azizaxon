@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Alisher & Azizaxon | Свадебное приглашение',
-  description: 'Свадебное приглашение Алишера и Азизахон',
+  title: 'Alisher & Yulduz | Свадебное приглашение',
+  description: 'Свадебное приглашение Alisher и Yulduz',
   icons: {
     icon: [
       { url: '/images/icon.png', sizes: 'any' },
