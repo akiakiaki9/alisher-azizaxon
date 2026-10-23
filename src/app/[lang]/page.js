@@ -34,11 +34,20 @@ export default function Home({ params }) {
         { id: 'hero', component: HeroBlock, props: { lang, guestName } },
         { id: 'invitation', component: InvitationBlock, props: { lang } },
         { id: 'thanks', component: ThanksBlock, props: { lang } },
-        { id: 'gallery', component: GalleryBlock, props: { lang } },
+        // { id: 'gallery', component: GalleryBlock, props: { lang } },
         { id: 'calendar', component: CalendarBlock, props: { lang } },
         { id: 'location', component: LocationBlock, props: { lang } },
         { id: 'final', component: FinalBlock, props: { lang } },
     ];
+
+    const scrollToSection = (index) => {
+        const container = containerRef.current;
+        const section = sectionRefs.current[index];
+        if (!container || !section) return;
+
+        container.scrollTo({ top: section.offsetTop, behavior: 'smooth' });
+        setActiveSection(index);
+    };
 
     const handleUnlock = () => {
         setIsUnlocked(true);
@@ -46,18 +55,16 @@ export default function Home({ params }) {
             musicPlayerRef.current.startMusic();
         }
         setTimeout(() => {
-            if (sectionRefs.current[1]) {
-                sectionRefs.current[1].scrollIntoView({ behavior: 'smooth' });
-                setActiveSection(1);
-            }
+            scrollToSection(1);
         }, 500);
     };
 
     useEffect(() => {
         const handleScroll = () => {
             if (!containerRef.current) return;
-            const scrollPosition = containerRef.current.scrollTop;
-            const sectionHeight = window.innerHeight;
+            const { scrollTop, clientHeight } = containerRef.current;
+            const scrollPosition = scrollTop;
+            const sectionHeight = clientHeight;
             const newActive = Math.round(scrollPosition / sectionHeight);
             if (newActive !== activeSection) {
                 setActiveSection(Math.min(newActive, sections.length - 1));
@@ -70,13 +77,6 @@ export default function Home({ params }) {
             return () => container.removeEventListener('scroll', handleScroll);
         }
     }, [activeSection, sections.length]);
-
-    const scrollToSection = (index) => {
-        if (sectionRefs.current[index]) {
-            sectionRefs.current[index].scrollIntoView({ behavior: 'smooth' });
-            setActiveSection(index);
-        }
-    };
 
     const visibleSections = isUnlocked ? sections : [sections[0]];
 
